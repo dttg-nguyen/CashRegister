@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     TextView productTypeView, quantityView, totalView;
     ListView listView;
     Button buyButton, managerButton;
@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
     Double total, price = 0.0;
     int qtyInStock, selectedItemPosition;
+
+    ProductListBaseAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         List<Product> products = productManager.getProducts();
 
         // Adapter
-        ProductListBaseAdapter adapter = new ProductListBaseAdapter(this, products);
+        adapter = new ProductListBaseAdapter(this, products);
 
         // Set ListView adapter
         listView = findViewById(R.id.productListView);
@@ -87,9 +89,19 @@ public class MainActivity extends AppCompatActivity {
 
         // Buy button onClick
         buyButton = findViewById(R.id.buy);
-        buyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        buyButton.setOnClickListener(this);
+
+        // Manager button onClick
+        managerButton = findViewById(R.id.manager);
+        managerButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+
+        switch (id) {
+            case R.id.buy:
                 if (quantityView.getText().toString().equals("Quantity") || quantityView.getText().toString().equals("0") || productTypeView.getText().toString().equals("Product Type")) {
                     Toast.makeText(MainActivity.this, "All fields are required!!!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -110,18 +122,10 @@ public class MainActivity extends AppCompatActivity {
 
                     alertDialogBuilder.show();
                 }
-            }
-        });
-
-        // Manager button onClick
-        managerButton = findViewById(R.id.manager);
-        managerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            case R.id.manager:
                 Intent intent;
                 intent = new Intent(MainActivity.this, ManagerPanel.class);
                 startActivity(intent);
-            }
-        });
+        }
     }
 }
