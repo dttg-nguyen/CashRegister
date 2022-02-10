@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.Locale;
 
 public class ProductListBaseAdapter extends BaseAdapter {
     private Context context;
@@ -38,7 +37,7 @@ public class ProductListBaseAdapter extends BaseAdapter {
     public View getView(int position, View view, ViewGroup viewGroup) {
         // inflate the layout for each list row
         if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.row_layout_base_adapter, null);
+            view = LayoutInflater.from(context).inflate(R.layout.row_layout_baseadapter, null);
         }
 
         Product currentProduct = (Product) getItem(position);
