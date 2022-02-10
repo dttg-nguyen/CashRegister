@@ -2,10 +2,13 @@ package com.example.cashregister;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
+
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.NumberPicker;
@@ -20,14 +23,8 @@ public class MainActivity extends AppCompatActivity {
     Button buyButton, managerButton;
     NumberPicker numberPicker;
 
-    ProductManager productManager = ((MyApp) getApplication()).productManager;
-    List<Product> products = productManager.getProducts();
-
     Double total, price = 0.0;
     int qtyInStock, selectedItemPosition;
-
-    // Adapter
-    ProductListBaseAdapter adapter = new ProductListBaseAdapter(this, products);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +62,12 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
+        ProductManager productManager = ((MyApp) getApplication()).productManager;
+        List<Product> products = productManager.getProducts();
+
+        // Adapter
+        ProductListBaseAdapter adapter = new ProductListBaseAdapter(this, products);
+
         // Set ListView adapter
         listView = findViewById(R.id.productListView);
         listView.setAdapter(adapter);
@@ -82,19 +85,42 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        // Buy button clicked
+        // Buy button onClick
         buyButton = findViewById(R.id.buy);
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (quantityView.getText().toString().equals("Quantity") || quantityView.getText().toString().equals("0") || productTypeView.getText().toString().equals("Product Type")) {
                     Toast.makeText(MainActivity.this, "All fields are required!!!", Toast.LENGTH_SHORT).show();
-                }
+                } else {
+                    Product p = (Product) listView.getItemAtPosition(selectedItemPosition);
+                    p.quantity -= Integer.parseInt(quantityView.getText().toString());
+                    adapter.notifyDataSetChanged();
 
-                Product p = (Product) listView.getItemAtPosition(selectedItemPosition);
-                p.quantity -= Integer.parseInt(quantityView.getText().toString());
-                adapter.notifyDataSetChanged();
+                    // Create dialog builder to notify user of the order
+                    // Dialog is closed when touched outside or use BACK key
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                    // set dialog title
+                    alertDialogBuilder.setTitle("Thank You for your purchase");
+                    // set dialog message
+                    alertDialogBuilder.setMessage("Your purchase is " +
+                            quantityView.getText().toString() + " " +
+                            productTypeView.getText().toString() + " " + "for " +
+                            String.format("%.2f", total));
+
+                    alertDialogBuilder.show();
+                }
+            }
+        });
+
+        // Manager button onClick
+        managerButton = findViewById(R.id.manager);
+        managerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent;
+                intent = new Intent(MainActivity.this, ManagerPanel.class);
+                startActivity(intent);
             }
         });
     }
