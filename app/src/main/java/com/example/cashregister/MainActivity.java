@@ -15,6 +15,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             });
         }
 
+        // Get product list
         ProductManager productManager = ((MyApp) getApplication()).productManager;
         List<Product> products = productManager.getProducts();
 
@@ -102,7 +104,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (id) {
             case R.id.buy:
-                if (quantityView.getText().toString().equals("Quantity") || quantityView.getText().toString().equals("0") || productTypeView.getText().toString().equals("Product Type")) {
+                if (quantityView.getText().toString().equals("Quantity")
+                        || quantityView.getText().toString().equals("0")
+                        || productTypeView.getText().toString().equals("Product Type")) {
                     Toast.makeText(MainActivity.this, "All fields are required!!!", Toast.LENGTH_SHORT).show();
                 } else {
                     Product p = (Product) listView.getItemAtPosition(selectedItemPosition);
@@ -121,11 +125,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             String.format("%.2f", total));
 
                     alertDialogBuilder.show();
+
+                    // Add order to history
+                    History history = new History(productTypeView.getText().toString(), quantityView.getText().toString(),total, new Date());
+                    HistoryManager hm = ((MyApp)getApplication()).historyManager;
+                    hm.add(history);
                 }
+                break;
             case R.id.manager:
                 Intent intent;
                 intent = new Intent(MainActivity.this, ManagerPanel.class);
                 startActivity(intent);
+                break;
+            default:
+                throw new RuntimeException("Not supported id" + id);
         }
     }
 }
