@@ -11,6 +11,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CashRegister">
         <activity
+            android:name=".HistoryDetailsActivity"
+            android:parentActivityName=".HistoryAdapterActivity"
+            android:exported="true" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".HistoryAdapterActivity"
+            android:parentActivityName=".ManagerPanel"
+            android:exported="true" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
+        <activity
             android:name=".ManagerPanel"
             android:parentActivityName=".MainActivity"
             android:exported="true" >
@@ -18,6 +36,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
