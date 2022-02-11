@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/history_nestedLayout"
@@ -12,16 +13,17 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.2">
+        app:layout_constraintWidth_percent="0.7">
 
         <TextView
             android:id="@+id/history_product"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="Product"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="20sp"
 
             app:layout_constraintBottom_toTopOf="@id/history_quantity"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -30,11 +32,11 @@
 
         <TextView
             android:id="@+id/history_quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="Quantity"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="20sp"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -49,9 +51,8 @@
         android:layout_height="wrap_content"
         android:text="Total"
         android:textColor="@color/black"
-        android:textSize="15sp"
+        android:textSize="20sp"
 
-        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintLeft_toRightOf="@+id/history_nestedLayout"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
