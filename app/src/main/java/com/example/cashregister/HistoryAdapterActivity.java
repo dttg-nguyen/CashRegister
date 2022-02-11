@@ -1,8 +1,12 @@
 package com.example.cashregister;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -24,6 +28,7 @@ public class HistoryAdapterActivity extends AppCompatActivity {
 
         // adapter + view
         HistoryRecyclerViewAdapter adapter = new HistoryRecyclerViewAdapter(this, historyList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
 }
