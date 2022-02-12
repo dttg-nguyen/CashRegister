@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int qtyInStock, selectedItemPosition;
 
     ProductListBaseAdapter adapter;
+    Product currentProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,11 +82,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Product p = (Product) listView.getItemAtPosition(position);
-                productTypeView.setText(p.name);
-                price = p.price;
-                qtyInStock = p.quantity;
-                selectedItemPosition = position;
+                currentProduct = (Product) listView.getItemAtPosition(position);
+                productTypeView.setText(currentProduct.name);
             }
         });
 
@@ -101,16 +99,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         int id = view.getId();
+        String quantityViewString = quantityView.getText().toString();
+        String productTypeViewString = productTypeView.getText().toString();
 
         switch (id) {
             case R.id.buy:
-                if (quantityView.getText().toString().equals("Quantity")
-                        || quantityView.getText().toString().equals("0")
-                        || productTypeView.getText().toString().equals("Product Type")) {
+                if (quantityViewString.isEmpty()
+                        || quantityViewString.equals("0")
+                        || productTypeViewString.isEmpty()) {
                     Toast.makeText(MainActivity.this, "All fields are required!!!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Product p = (Product) listView.getItemAtPosition(selectedItemPosition);
-                    p.quantity -= Integer.parseInt(quantityView.getText().toString());
+                    currentProduct.quantity -= Integer.parseInt(quantityViewString);
+                    // Update product data
                     adapter.notifyDataSetChanged();
 
                     // Create dialog builder to notify user of the order
@@ -120,15 +120,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     alertDialogBuilder.setTitle("Thank You for your purchase");
                     // set dialog message
                     alertDialogBuilder.setMessage("Your purchase is " +
-                            quantityView.getText().toString() + " " +
-                            productTypeView.getText().toString() + " " + "for " +
+                            quantityViewString + " " +
+                            productTypeViewString + " " + "for " +
                             String.format("%.2f", total));
 
                     alertDialogBuilder.show();
 
                     // Add order to history
-                    History history = new History(productTypeView.getText().toString(), quantityView.getText().toString(),total, new Date());
-                    HistoryManager hm = ((MyApp)getApplication()).historyManager;
+                    History history = new History(productTypeViewString, quantityViewString, total, new Date());
+                    HistoryManager hm = ((MyApp) getApplication()).historyManager;
                     hm.add(history);
                 }
                 break;

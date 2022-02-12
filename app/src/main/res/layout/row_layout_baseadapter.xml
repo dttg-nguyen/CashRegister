@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:text="Name"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="18sp"
 
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:text="Price"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="18sp"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/productList_name"
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:text="Quantity"
         android:textColor="@color/black"
-        android:textSize="15sp"
+        android:textSize="18sp"
 
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/nestedContraintLayout"

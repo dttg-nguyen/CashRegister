@@ -20,6 +20,15 @@
         </activity>
 
         <activity
+            android:name=".RestockActivity"
+            android:parentActivityName=".ManagerPanel"
+            android:exported="true" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
+        <activity
             android:name=".HistoryAdapterActivity"
             android:parentActivityName=".ManagerPanel"
             android:exported="true" >

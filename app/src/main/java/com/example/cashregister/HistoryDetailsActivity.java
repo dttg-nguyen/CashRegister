@@ -14,7 +14,7 @@ public class HistoryDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.history_details);
+        setContentView(R.layout.activity_history_details);
 
         productName = findViewById(R.id.history_details_productName);
         totalPrice = findViewById(R.id.history_details_totalPrice);
