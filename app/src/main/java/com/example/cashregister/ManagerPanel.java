@@ -27,15 +27,16 @@ public class ManagerPanel extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         int id = view.getId();
+        Intent intent;
 
         switch (id){
             case R.id.history_button:
-                Intent intent;
                 intent = new Intent(ManagerPanel.this, HistoryAdapterActivity.class);
                 startActivity(intent);
                 break;
             case R.id.restock_button:
-                Toast.makeText(this, "Manager button clicks", Toast.LENGTH_SHORT).show();
+                intent = new Intent(ManagerPanel.this, RestockActivity.class);
+                startActivity(intent);
                 break;
         }
     }
