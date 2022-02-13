@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     NumberPicker numberPicker;
 
     Double total, price = 0.0;
-    int qtyInStock, selectedItemPosition;
+    int qtyInStock;
 
     ProductListBaseAdapter adapter;
     Product currentProduct;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     int quantity = numberPicker.getValue();
                     quantityView.setText(String.valueOf(quantity));
 
-                    if (price != 0.0) {
+                    if (quantity > 0) {
                         total = quantity * price;
                         totalView.setText(String.format("%.2f", total));
 
@@ -83,6 +83,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 currentProduct = (Product) listView.getItemAtPosition(position);
+                price = currentProduct.price;
+                qtyInStock = currentProduct.quantity;
+
                 productTypeView.setText(currentProduct.name);
             }
         });
