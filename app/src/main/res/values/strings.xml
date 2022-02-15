@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Cash Register</string>
+    <string name="hd_product">Product</string>
+    <string name="hd_total_price">Total Price</string>
+    <string name="hd_date">Date</string>
+    <string name="m_product_type">Product Type</string>
+    <string name="m_manager">manager</string>
+    <string name="m_total">Total</string>
+    <string name="m_quantity">Quantity</string>
+    <string name="m_buy">buy</string>
+    <string name="mp_history">History</string>
+    <string name="mp_restock">Restock</string>
+    <string name="enter_a_quantity">Enter a quantity</string>
+    <string name="ok_button">ok</string>
+    <string name="cancel_button">cancel</string>
+    <string name="hli_product">Product</string>
+    <string name="hli_quantity">Quantity</string>
+    <string name="hli_total">Total</string>
+    <string name="r_name">Name</string>
+    <string name="r_price">Price</string>
+    <string name="r_quantity">Quantity</string>
 </resources>

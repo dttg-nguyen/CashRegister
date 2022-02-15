@@ -10,7 +10,7 @@
         android:id="@+id/history_details_productName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Product"
+        android:text="@string/hd_product"
         android:textSize="20sp"
         android:textColor="@color/black"
 
@@ -24,7 +24,7 @@
         android:id="@+id/history_details_totalPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Total Price"
+        android:text="@string/hd_total_price"
         android:textSize="20sp"
         android:textColor="@color/black"
 
@@ -38,7 +38,7 @@
         android:id="@+id/history_details_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Date"
+        android:text="@string/hd_date"
         android:textSize="20sp"
         android:textColor="@color/black"
 
