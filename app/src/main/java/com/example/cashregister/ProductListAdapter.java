@@ -9,11 +9,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class ProductListBaseAdapter extends BaseAdapter {
-    private Context context;
-    public List<Product> products;
+public class ProductListAdapter extends BaseAdapter {
+    private final Context context;
+    private final List<Product> products;
 
-    public ProductListBaseAdapter(Context context, List<Product> products) {
+    public ProductListAdapter(Context context, List<Product> products) {
         this.context = context;
         this.products = products;
     }
@@ -46,9 +46,9 @@ public class ProductListBaseAdapter extends BaseAdapter {
         TextView product_quantity = view.findViewById(R.id.productList_quantity);
         TextView product_price = view.findViewById(R.id.productList_price);
 
-        product_name.setText(currentProduct.name);
-        product_quantity.setText(String.valueOf(currentProduct.quantity));
-        product_price.setText(String.valueOf(currentProduct.price));
+        product_name.setText(currentProduct.getName());
+        product_quantity.setText(String.valueOf(currentProduct.getQuantity()));
+        product_price.setText(String.valueOf(currentProduct.getPrice()));
 
         return view;
     }

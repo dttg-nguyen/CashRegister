@@ -12,7 +12,7 @@
         android:theme="@style/Theme.CashRegister">
         <activity
             android:name=".HistoryDetailsActivity"
-            android:parentActivityName=".HistoryAdapterActivity"
+            android:parentActivityName=".HistoryRecyclerViewActivity"
             android:exported="true" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -21,7 +21,7 @@
 
         <activity
             android:name=".RestockActivity"
-            android:parentActivityName=".ManagerPanel"
+            android:parentActivityName=".ManagerPanelActivity"
             android:exported="true" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -29,8 +29,8 @@
         </activity>
 
         <activity
-            android:name=".HistoryAdapterActivity"
-            android:parentActivityName=".ManagerPanel"
+            android:name=".HistoryRecyclerViewActivity"
+            android:parentActivityName=".ManagerPanelActivity"
             android:exported="true" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -38,7 +38,7 @@
         </activity>
 
         <activity
-            android:name=".ManagerPanel"
+            android:name=".ManagerPanelActivity"
             android:parentActivityName=".MainActivity"
             android:exported="true" >
             <meta-data
