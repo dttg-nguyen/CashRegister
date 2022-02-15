@@ -7,9 +7,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class HistoryDetailsActivity extends AppCompatActivity {
-    TextView productName;
-    TextView totalPrice;
-    TextView date;
+    private TextView productName;
+    private TextView totalPrice;
+    private TextView date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

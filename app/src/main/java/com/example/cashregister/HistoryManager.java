@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryManager {
-    List<History> historyList;
+    private final List<History> historyList;
 
     public HistoryManager(){
         historyList = new ArrayList<>();

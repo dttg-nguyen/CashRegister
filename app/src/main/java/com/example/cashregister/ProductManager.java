@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ProductManager {
-    private List<Product> products;
+    private final List<Product> products;
 
     public ProductManager() {
         products = Arrays.asList(

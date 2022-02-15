@@ -13,13 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.List;
 
 public class RestockActivity extends AppCompatActivity implements View.OnClickListener {
-    List<Product> products;
-    ProductListBaseAdapter adapter;
-    Product product;
-    ListView productListView;
+    private List<Product> products;
+    private ProductListAdapter productListAdapter;
+    private Product selectedProduct;
+    private ListView productListView;
 
-    EditText add_to_quantity;
-    Button okButton, cancelButton;
+    private EditText addToQuantity;
+    private Button okButton, cancelButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,22 +27,22 @@ public class RestockActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_restock);
 
         // Set adapter for the listview
-        products = ((MyApp) getApplication()).productManager.getProducts();
-        adapter = new ProductListBaseAdapter(this, products);
+        products = ((MyApp) getApplication()).getProductManager().getProducts();
+        productListAdapter = new ProductListAdapter(this, products);
 
         productListView = findViewById(R.id.productListView);
-        productListView.setAdapter(adapter);
+        productListView.setAdapter(productListAdapter);
 
         // when a product is selected
         productListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                product = (Product) productListView.getItemAtPosition(position);
+                selectedProduct = (Product) productListView.getItemAtPosition(position);
             }
         });
 
         // Ok & Cancel buttons
-        add_to_quantity = findViewById(R.id.add_to_quantity);
+        addToQuantity = findViewById(R.id.add_to_quantity);
         okButton = findViewById(R.id.ok_button);
         cancelButton = findViewById(R.id.cancel_button);
 
@@ -53,16 +53,16 @@ public class RestockActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        String quantityToAdd = add_to_quantity.getText().toString();
+        String quantityToAdd = addToQuantity.getText().toString();
 
         switch (id) {
             case R.id.ok_button:
-                if (product == null || quantityToAdd.isEmpty()) {
+                if (selectedProduct == null || quantityToAdd.isEmpty()) {
                     Toast.makeText(RestockActivity.this, "All fields are required!!!", Toast.LENGTH_SHORT).show();
                 } else {
-                    product.quantity += Integer.parseInt(quantityToAdd);
-                    add_to_quantity.setText("");
-                    adapter.notifyDataSetChanged();
+                    selectedProduct.setQuantity(selectedProduct.getQuantity() + Integer.parseInt(quantityToAdd));
+                    addToQuantity.setText("");
+                    productListAdapter.notifyDataSetChanged();
                 }
                 break;
             case R.id.cancel_button:

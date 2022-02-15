@@ -16,8 +16,8 @@ import java.util.Date;
 import java.util.List;
 
 public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecyclerViewAdapter.ViewHolder> {
-    Context context;
-    List<History> historyList;
+    private final Context context;
+    private final List<History> historyList;
 
     public HistoryRecyclerViewAdapter(Context context, List<History> historyList) {
         this.context = context;
@@ -28,30 +28,31 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.history_list_item_recyclerview, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.history_list_item_recyclerview, parent, false);
 
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // Retrieve date for that position
+        // Retrieve data for that position
         History history = historyList.get(position);
-        // Add date to the view
-        holder.product.setText(history.productName);
-        holder.quantity.setText(history.quantity);
-        holder.total.setText(String.format("%.2f", history.totalPrice));
+
+        // Add data to the view
+        holder.product.setText(history.getProductName());
+        holder.quantity.setText(history.getQuantity());
+        holder.total.setText(String.format("%.2f", history.getTotalPrice()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent;
                 intent = new Intent(context, HistoryDetailsActivity.class);
-                intent.putExtra("name", history.productName);
-                intent.putExtra("totalPrice", String.format("%.2f", history.totalPrice));
+                intent.putExtra("name", history.getProductName());
+                intent.putExtra("totalPrice", String.format("%.2f", history.getTotalPrice()));
 
                 Format formatter = new SimpleDateFormat("EEE, MMM dd, yyyy HH:mm:ss");
-                String date = formatter.format(history.purchaseDate);
+                String date = formatter.format(history.getPurchaseDate());
 
                 intent.putExtra("date", date);
 
@@ -65,7 +66,7 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
         return historyList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView product;
         private final TextView quantity;
         private final TextView total;
