@@ -46,17 +46,18 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent;
-                intent = new Intent(context, HistoryDetailsActivity.class);
-                intent.putExtra("name", history.getProductName());
-                intent.putExtra("totalPrice", String.format("%.2f", history.getTotalPrice()));
+                Intent historyIntent;
+                historyIntent = new Intent(context, HistoryDetailsActivity.class);
 
                 Format formatter = new SimpleDateFormat("EEE, MMM dd, yyyy HH:mm:ss");
                 String date = formatter.format(history.getPurchaseDate());
 
-                intent.putExtra("date", date);
+                // pass data to the history details activity
+                historyIntent.putExtra("name", history.getProductName());
+                historyIntent.putExtra("totalPrice", String.format("%.2f", history.getTotalPrice()));
+                historyIntent.putExtra("date", date);
 
-                context.startActivity(intent);
+                context.startActivity(historyIntent);
             }
         });
     }
