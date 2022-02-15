@@ -19,16 +19,16 @@ import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    TextView productTypeView, quantityView, totalView;
-    ListView listView;
-    Button buyButton, managerButton;
-    NumberPicker numberPicker;
+    private TextView productTypeView, quantityView, totalView;
+    private ListView listView;
+    private Button buyButton, managerButton;
+    private NumberPicker numberPicker;
 
-    Double total, price = 0.0;
-    int qtyInStock;
+    int selectedQuantity = -1;
+    private double total = 0.0;
 
-    ProductListBaseAdapter adapter;
-    Product currentProduct;
+    private ProductListAdapter productListAdapter;
+    private Product selectedProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,51 +42,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         numberPicker = findViewById(R.id.number_picker);
 
         // NumberPicker
-        if (numberPicker != null) {
-            numberPicker.setMinValue(0);
-            numberPicker.setMaxValue(100);
-            // wrap the wheel
-            numberPicker.setWrapSelectorWheel(true);
+        numberPicker.setMinValue(0);
+        numberPicker.setMaxValue(100);
+        // wrap the wheel
+        numberPicker.setWrapSelectorWheel(true);
 
-            numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-                @Override
-                public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                    int quantity = numberPicker.getValue();
-                    quantityView.setText(String.valueOf(quantity));
+        numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                selectedQuantity = numberPicker.getValue();
+                quantityView.setText(String.valueOf(selectedQuantity));
 
-                    if (quantity > 0) {
-                        total = quantity * price;
-                        totalView.setText(String.format("%.2f", total));
-
-                        if (quantity > qtyInStock) {
-                            Toast.makeText(MainActivity.this, "Not enough quantity in the stock!!!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                if (selectedProduct != null) {
+                    totalCalculationAndQuantityInStockValidate();
                 }
-            });
-        }
+            }
+        });
 
         // Get product list
-        ProductManager productManager = ((MyApp) getApplication()).productManager;
+        ProductManager productManager = ((MyApp) getApplication()).getProductManager();
         List<Product> products = productManager.getProducts();
 
         // Adapter
-        adapter = new ProductListBaseAdapter(this, products);
+        productListAdapter = new ProductListAdapter(this, products);
 
         // Set ListView adapter
         listView = findViewById(R.id.productListView);
-        listView.setAdapter(adapter);
+        listView.setAdapter(productListAdapter);
 
         // Product ListView is clicked
         // Calculate total price
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                currentProduct = (Product) listView.getItemAtPosition(position);
-                price = currentProduct.price;
-                qtyInStock = currentProduct.quantity;
+                selectedProduct = (Product) listView.getItemAtPosition(position);
 
-                productTypeView.setText(currentProduct.name);
+                productTypeView.setText(selectedProduct.getName());
+                if (selectedQuantity > -1) {
+                    totalCalculationAndQuantityInStockValidate();
+                }
             }
         });
 
@@ -112,9 +106,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         || productTypeViewString.isEmpty()) {
                     Toast.makeText(MainActivity.this, "All fields are required!!!", Toast.LENGTH_SHORT).show();
                 } else {
-                    currentProduct.quantity -= Integer.parseInt(quantityViewString);
+                    selectedProduct.setQuantity(selectedProduct.getQuantity() - Integer.parseInt(quantityViewString));
                     // Update product data
-                    adapter.notifyDataSetChanged();
+                    productListAdapter.notifyDataSetChanged();
 
                     // Create dialog builder to notify user of the order
                     // Dialog is closed when touched outside or use BACK key
@@ -131,17 +125,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     // Add order to history
                     History history = new History(productTypeViewString, quantityViewString, total, new Date());
-                    HistoryManager hm = ((MyApp) getApplication()).historyManager;
+                    HistoryManager hm = ((MyApp) getApplication()).getHistoryManager();
                     hm.add(history);
                 }
                 break;
             case R.id.manager:
                 Intent intent;
-                intent = new Intent(MainActivity.this, ManagerPanel.class);
+                intent = new Intent(MainActivity.this, ManagerPanelActivity.class);
                 startActivity(intent);
                 break;
-            default:
-                throw new RuntimeException("Not supported id" + id);
+        }
+    }
+
+    private void totalCalculationAndQuantityInStockValidate() {
+        total = selectedQuantity * selectedProduct.getPrice();
+        totalView.setText(String.format("%.2f", total));
+
+        if (selectedQuantity > selectedProduct.getQuantity()) {
+            Toast.makeText(MainActivity.this, "Not enough quantity in the stock!!!", Toast.LENGTH_SHORT).show();
         }
     }
 }
