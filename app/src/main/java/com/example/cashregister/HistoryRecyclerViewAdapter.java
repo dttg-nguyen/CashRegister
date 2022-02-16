@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecyclerViewAdapter.ViewHolder> {
     private final Context context;
@@ -41,21 +41,20 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
         // Add data to the view
         holder.product.setText(history.getProductName());
         holder.quantity.setText(history.getQuantity());
-        holder.total.setText(String.format("%.2f", history.getTotalPrice()));
+        holder.total.setText(String.format(Locale.CANADA,"%.2f", history.getTotalPrice()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent historyIntent;
-                historyIntent = new Intent(context, HistoryDetailsActivity.class);
+                Intent historyIntent = new Intent(context, HistoryDetailsActivity.class);
 
-                Format formatter = new SimpleDateFormat("EEE, MMM dd, yyyy HH:mm:ss");
+                Format formatter = new SimpleDateFormat("EEE, MMM dd, yyyy HH:mm:ss", Locale.CANADA);
                 String date = formatter.format(history.getPurchaseDate());
 
                 // pass data to the history details activity
                 historyIntent.putExtra("name", history.getProductName());
-                historyIntent.putExtra("totalPrice", String.format("%.2f", history.getTotalPrice()));
-                historyIntent.putExtra("date", date);
+                historyIntent.putExtra("totalPrice", String.format(Locale.CANADA,"%.2f", history.getTotalPrice()));
+                historyIntent.putExtra("purchaseDate", date);
 
                 context.startActivity(historyIntent);
             }

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView productTypeView, quantityView, totalView;
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     alertDialogBuilder.setMessage("Your purchase is " +
                             quantityViewString + " " +
                             productTypeViewString + " " + "for " +
-                            String.format("%.2f", total));
+                            String.format(Locale.CANADA,"%.2f", total));
 
                     alertDialogBuilder.show();
 
@@ -139,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void totalCalculationAndQuantityInStockValidate() {
         total = selectedQuantity * selectedProduct.getPrice();
-        totalView.setText(String.format("%.2f", total));
+        totalView.setText(String.format(Locale.CANADA,"%.2f", total));
 
         if (selectedQuantity > selectedProduct.getQuantity()) {
             Toast.makeText(MainActivity.this, "Not enough quantity in the stock!!!", Toast.LENGTH_SHORT).show();
