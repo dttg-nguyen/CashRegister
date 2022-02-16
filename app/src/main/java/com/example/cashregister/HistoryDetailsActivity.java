@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class HistoryDetailsActivity extends AppCompatActivity {
     private TextView productName;
     private TextView totalPrice;
-    private TextView date;
+    private TextView purchaseDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,12 +18,17 @@ public class HistoryDetailsActivity extends AppCompatActivity {
 
         productName = findViewById(R.id.history_details_productName);
         totalPrice = findViewById(R.id.history_details_totalPrice);
-        date = findViewById(R.id.history_details_date);
+        purchaseDate = findViewById(R.id.history_details_purchase_date);
 
         // Retrieve history details from intent passed by History Activity
         Intent intent = getIntent();
-        productName.setText("Product: " + intent.getStringExtra("name"));
-        totalPrice.setText("Price: " + intent.getStringExtra("totalPrice"));
-        date.setText("Purchase Date: " + intent.getStringExtra("date"));
+
+        String productNameString = "Product: " + intent.getStringExtra("name");
+        String totalPriceString = "Price: " + intent.getStringExtra("totalPrice");
+        String purchaseDateString = "Purchase Date: " + intent.getStringExtra("purchaseDate");
+
+        productName.setText(productNameString);
+        totalPrice.setText(totalPriceString);
+        purchaseDate.setText(purchaseDateString);
     }
 }
