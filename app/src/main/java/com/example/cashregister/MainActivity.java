@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        // ListView
         // Get product list
         ProductManager productManager = ((MyApp) getApplication()).getProductManager();
         List<Product> products = productManager.getProducts();
@@ -106,7 +107,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         || quantityViewString.equals("0")
                         || productTypeViewString.isEmpty()) {
                     Toast.makeText(MainActivity.this, "All fields are required!!!", Toast.LENGTH_SHORT).show();
-                } else {
+                }
+                if (selectedQuantity > 0 && selectedQuantity <= selectedProduct.getQuantity()) {
                     selectedProduct.setQuantity(selectedProduct.getQuantity() - Integer.parseInt(quantityViewString));
                     // Update product data
                     productListAdapter.notifyDataSetChanged();
@@ -120,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     alertDialogBuilder.setMessage("Your purchase is " +
                             quantityViewString + " " +
                             productTypeViewString + " " + "for " +
-                            String.format(Locale.CANADA,"%.2f", total));
+                            String.format(Locale.CANADA, "%.2f", total));
 
                     alertDialogBuilder.show();
 
@@ -140,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void totalCalculationAndQuantityInStockValidate() {
         total = selectedQuantity * selectedProduct.getPrice();
-        totalView.setText(String.format(Locale.CANADA,"%.2f", total));
+        totalView.setText(String.format(Locale.CANADA, "%.2f", total));
 
         if (selectedQuantity > selectedProduct.getQuantity()) {
             Toast.makeText(MainActivity.this, "Not enough quantity in the stock!!!", Toast.LENGTH_SHORT).show();
